@@ -40,13 +40,21 @@
                                 <a href="{{ route('app.fornecedor.editar', $fornecedor->id) }}">Editar</a>
                            </td>
                            <td>
-                                <a href="">Excluir</a>
+                                <a href="{{ route('app.fornecedor.excluir', $fornecedor->id) }}">Excluir</a>
                            </td>
                        </tr>
                     @endforeach
                 </tbody>
             </table>
             {{ $fornecedores->appends($request)->links() }}
+            <br>
+            {{ $fornecedores->count() }} - Registros por página.
+            <br>
+            Total de {{ $fornecedores->total() }} registros da consulta.
+            <br>
+            {{ $fornecedores->firstItem() }} - número do primeiro registro da página.
+            <br>
+            {{ $fornecedores->lastItem() }} - número do último registro da página.
         </div>
     </div>
 
