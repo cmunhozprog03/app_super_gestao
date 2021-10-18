@@ -1,6 +1,6 @@
 <?php
 
-
+use App\Http\Controllers\ProdutoController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -45,8 +45,9 @@ Route::middleware('autenticacao:padrao,adm')->prefix('/app')->group(function(){
     Route::get('fornecedor/excluir/{id}', 'FornecedorController@excluir')
         ->name('app.fornecedor.excluir');
 
+    //Produtos
+    Route::resource('produto', 'ProdutoController');
 
-    Route::get('produto', 'ProdutoController@index')->name('app.produto');
 });
 
 Route::get('/teste/{p1}/{p2}', 'TesteController@teste')->name('teste');
