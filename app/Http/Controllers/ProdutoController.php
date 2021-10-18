@@ -79,7 +79,8 @@ class ProdutoController extends Controller
      */
     public function edit(Produto $produto)
     {
-        //
+        $unidades = Unidade::all();
+        return view('app.produto.edit', compact('produto', 'unidades'));
     }
 
     /**
@@ -91,7 +92,27 @@ class ProdutoController extends Controller
      */
     public function update(Request $request, Produto $produto)
     {
-        //
+        $regras = [
+            'nome' => 'required|min:3|max:40',
+            'descricao' => 'required|min:3|max:2000',
+            'peso' => 'required|integer',
+            'unidade_id' => 'exists:unidades,id',
+        ];
+
+        $feedback = [
+            'required' => 'O Campo :attribute é obrigatório.',
+            'min' => 'O campo :attribute deve conter no mínimo 3 caracteres.',
+            'nome.max' => 'O campo nome deve conter no máximo 40 caracteres.',
+            'descricao.max' => 'O campo nome deve conter no máximo 2000 caracteres.',
+            'descricao.integer' => 'O campo peso de ser somente números inteiros',
+            'unidade_id.exists' => 'A unidade de medida não existe.'
+        ];
+
+        $request->validate($regras, $feedback);
+
+        $produto->update($request->all());
+
+        return redirect()->route('produto.index');
     }
 
     /**
@@ -102,6 +123,8 @@ class ProdutoController extends Controller
      */
     public function destroy(Produto $produto)
     {
-        //
+        $produto->delete();
+        return redirect()->route('produto.index');
+
     }
 }
